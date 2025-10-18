@@ -5,21 +5,13 @@ import { ChatFooter } from "~/features/chat/components/ChatFooter";
 import { ChatScroller } from "~/features/chat/components/ChatScroller";
 import type { ChatMessage } from "~/features/chat/components/ChatScroller";
 import { useState, useCallback } from "react";
+import { MOCK_MESSAGES } from "~/constants";
 import styles from "./style.module.css";
 
 export const ChatContainer = (): React.ReactNode => {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: "m1",
-      author: "assistant",
-      content: "こんにちは！今日は何をしますか？",
-    },
-    {
-      id: "m2",
-      author: "user",
-      content: "チャット画面のモックを試したいです。",
-    },
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>(
+    MOCK_MESSAGES as ChatMessage[]
+  );
   const [input, setInput] = useState("");
 
   const handleSend = useCallback(() => {
