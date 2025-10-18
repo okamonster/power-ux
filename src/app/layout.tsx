@@ -7,6 +7,7 @@ import "@mantine/core/styles.css";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
 import styles from "./layout.module.css";
+import { LoadingProvider } from "~/providers/loadingProvider";
 
 export default function RootLayout({
   children,
@@ -16,10 +17,12 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={styles.container}>
-        <MantineProvider>
-          <Notifications position="top-center" />
-          <main className={styles.main}>{children}</main>
-        </MantineProvider>
+        <LoadingProvider>
+          <MantineProvider>
+            <Notifications position="top-center" />
+            <main className={styles.main}>{children}</main>
+          </MantineProvider>
+        </LoadingProvider>
       </body>
     </html>
   );

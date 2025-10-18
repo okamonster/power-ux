@@ -30,3 +30,5 @@ export const MOCK_MESSAGES = [
   },
   { id: "m22", author: "user", content: "ダァ！! ふんが↑↑↑ふんが↓↓↓!" },
 ];
+
+export const MIME_TYPE = "audio/mp4";
