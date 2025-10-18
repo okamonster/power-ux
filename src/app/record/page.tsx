@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import {
   ActionIcon,
   Button,
@@ -14,16 +14,6 @@ import styles from "./style.module.css";
 import { useRecordAudio } from "~/features/record/hooks/useRecordAudio";
 
 export default function RecordPage(): React.ReactNode {
-  return (
-    <Suspense
-      fallback={<div className={styles.container}>デバイス初期化中...</div>}
-    >
-      <RecordInner />
-    </Suspense>
-  );
-}
-
-function RecordInner(): React.ReactNode {
   const { start, stop, reset, recording, recordTime, latestRecord } =
     useRecordAudio("default", 0);
 
