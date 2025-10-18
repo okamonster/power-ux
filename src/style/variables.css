@@ -1,0 +1,11 @@
+:root {
+	--theme-color: #ff6b6b;
+	--backgorund-gray-color: #fefefe;
+
+	/*** Button Colors ***/
+	--button-primary-color: #ff6b6b;
+	--button-gray-color: #919191;
+
+	/*** Border Colors ***/
+	--border-gray-color: #e0e0e0;
+}
