@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Group, Textarea } from "@mantine/core";
+import { IoMdSend } from "react-icons/io";
 import styles from "./style.module.css";
 
 type Props = {
@@ -35,7 +36,7 @@ export const ChatFooter = ({
           }}
         />
         <Button onClick={onSend} disabled={isSendDisabled}>
-          送信
+          <IoMdSend size={20} />
         </Button>
       </Group>
     </div>

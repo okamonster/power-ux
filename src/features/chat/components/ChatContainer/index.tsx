@@ -1,10 +1,10 @@
 "use client";
 
+import { DefaultHeader } from "~/components/Navigations/DefaultHeader";
+import { ChatFooter } from "~/features/chat/components/ChatFooter";
+import { ChatScroller } from "~/features/chat/components/ChatScroller";
+import type { ChatMessage } from "~/features/chat/components/ChatScroller";
 import { useState, useCallback } from "react";
-import { Box, Stack, Title } from "@mantine/core";
-import { ChatFooter } from "../ChatFooter";
-import { ChatScroller } from "../ChatScroller";
-import type { ChatMessage } from "../ChatScroller";
 import styles from "./style.module.css";
 
 export const ChatContainer = (): React.ReactNode => {
@@ -47,15 +47,10 @@ export const ChatContainer = (): React.ReactNode => {
 
   return (
     <div className={styles.chatContainer}>
-      <Stack h="100%" gap="xs">
-        <Title order={4} pl="md" pt="md">
-          Chat
-        </Title>
-        <Box className={styles.scrollerBox}>
-          <ChatScroller messages={messages} />
-        </Box>
-        <ChatFooter value={input} onChange={setInput} onSend={handleSend} />
-      </Stack>
+      <DefaultHeader title="Chat" />
+      <ChatScroller messages={messages} />
+
+      <ChatFooter value={input} onChange={setInput} onSend={handleSend} />
     </div>
   );
 };

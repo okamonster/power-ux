@@ -5,10 +5,3 @@
   position: relative;
   max-width: 100%;
 }
-
-.scrollerBox {
-  flex: 1;
-  min-height: 0; /* 必須: 子の ScrollArea に余白を与えずスクロールさせる */
-}
-
-/* 送信フッターは ChatFooter 側に移行 */

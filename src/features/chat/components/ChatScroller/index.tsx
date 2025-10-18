@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
 import { Avatar, Group, Paper, ScrollArea, Stack, Text } from "@mantine/core";
+import { useEffect, useMemo, useRef } from "react";
 
 type ChatMessage = {
   id: string;
