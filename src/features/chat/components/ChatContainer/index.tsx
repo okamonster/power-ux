@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
-import { Box, Button, Group, Stack, Textarea, Title } from "@mantine/core";
-import { ChatScroller, type ChatMessage } from "../ChatScroller";
+import { useState, useCallback } from "react";
+import { Box, Stack, Title } from "@mantine/core";
+import { ChatFooter } from "../ChatFooter";
+import { ChatScroller } from "../ChatScroller";
+import type { ChatMessage } from "../ChatScroller";
 import styles from "./style.module.css";
 
-export const ChatContainer = () => {
+export const ChatContainer = (): React.ReactNode => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "m1",
@@ -43,8 +45,6 @@ export const ChatContainer = () => {
     }, 400);
   }, [input]);
 
-  const isSendDisabled = useMemo(() => input.trim().length === 0, [input]);
-
   return (
     <div className={styles.chatContainer}>
       <Stack h="100%" gap="xs">
@@ -54,28 +54,7 @@ export const ChatContainer = () => {
         <Box className={styles.scrollerBox}>
           <ChatScroller messages={messages} />
         </Box>
-        <Box className={styles.inputBar}>
-          <Group align="flex-end" gap="sm">
-            <Textarea
-              value={input}
-              onChange={(e) => setInput(e.currentTarget.value)}
-              placeholder="メッセージを入力..."
-              autosize
-              minRows={1}
-              maxRows={4}
-              style={{ flex: 1 }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  handleSend();
-                }
-              }}
-            />
-            <Button onClick={handleSend} disabled={isSendDisabled}>
-              送信
-            </Button>
-          </Group>
-        </Box>
+        <ChatFooter value={input} onChange={setInput} onSend={handleSend} />
       </Stack>
     </div>
   );

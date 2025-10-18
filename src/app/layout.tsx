@@ -2,6 +2,7 @@ import "~/style/globals.css";
 import "~/style/reset.css";
 import "~/style/variables.css";
 import { MantineProvider } from "@mantine/core";
+import type { Viewport } from "next";
 import "@mantine/core/styles.css";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
@@ -23,3 +24,10 @@ export default function RootLayout({
     </html>
   );
 }
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};

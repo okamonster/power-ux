@@ -2,6 +2,8 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
+  max-width: 100%;
 }
 
 .scrollerBox {
@@ -9,8 +11,4 @@
   min-height: 0; /* 必須: 子の ScrollArea に余白を与えずスクロールさせる */
 }
 
-.inputBar {
-  padding: 8px 12px;
-  border-top: 1px solid #eee;
-  background: #fff;
-}
+/* 送信フッターは ChatFooter 側に移行 */
