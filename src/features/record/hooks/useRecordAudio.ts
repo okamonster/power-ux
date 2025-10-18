@@ -1,9 +1,8 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useLoadingContext } from "~/providers/loadingProvider";
 import useTimerSeconds from "./useTimerSecond";
 import { MIME_TYPE } from "~/constants";
-import useSWR from "swr";
 
 const getAudioStream = async (deviceId: string) => {
   return navigator.mediaDevices.getUserMedia({ audio: { deviceId } });
@@ -12,10 +11,6 @@ const getMediaRecorder = async (stream: MediaStream) => {
   return new MediaRecorder(stream, {
     mimeType: MIME_TYPE,
   });
-};
-const getMediaRecorderByDeviceId = async (deviceId: string) => {
-  const stream = await getAudioStream(deviceId);
-  return getMediaRecorder(stream);
 };
 
 type UseRecordAudioReturn = {
@@ -32,16 +27,10 @@ export const useRecordAudio = (
   bufferTime: number
 ): UseRecordAudioReturn => {
   const { startLoading, stopLoading } = useLoadingContext();
-  const { data: mediaRecorder } = useSWR(
-    ["audioStream", deviceId],
-    () => getMediaRecorderByDeviceId(deviceId),
-    {
-      suspense: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      revalidateIfStale: false,
-    }
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
+    null
   );
+  const streamRef = useRef<MediaStream | null>(null);
 
   const [latestRecord, setLatestRecord] = useState<Blob | null>(null);
   const {
@@ -52,9 +41,47 @@ export const useRecordAudio = (
     reset: resetTimer,
   } = useTimerSeconds();
 
-  if (!MediaRecorder.isTypeSupported(MIME_TYPE)) {
-    console.error(`${MIME_TYPE} is not supported`);
-  }
+  // SSR ガード: ブラウザ以外では初期化しない
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (typeof MediaRecorder === "undefined") return;
+    let isActive = true;
+    (async () => {
+      try {
+        const stream = await getAudioStream(deviceId);
+        streamRef.current = stream;
+        // 型サポートチェック（未対応でも MediaRecorder の生成を試す）
+        try {
+          if (!MediaRecorder.isTypeSupported?.(MIME_TYPE)) {
+            // 端末によっては mp4 非対応
+            // そのまま生成に失敗したら catch で拾う
+          }
+        } catch {}
+        const mr = await getMediaRecorder(stream);
+        if (!isActive) {
+          for (const t of stream.getTracks()) {
+            t.stop();
+          }
+          return;
+        }
+        setMediaRecorder(mr);
+      } catch (e) {
+        console.error("Failed to init MediaRecorder", e);
+        setMediaRecorder(null);
+      }
+    })();
+    return () => {
+      isActive = false;
+      const s = streamRef.current;
+      if (s) {
+        for (const t of s.getTracks()) {
+          t.stop();
+        }
+      }
+      streamRef.current = null;
+      setMediaRecorder(null);
+    };
+  }, [deviceId]);
 
   useEffect(() => {
     if (!mediaRecorder) return;

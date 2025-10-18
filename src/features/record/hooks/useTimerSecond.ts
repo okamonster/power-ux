@@ -13,8 +13,10 @@ export default function useTimerSeconds(): UseTimerSecondsReturn {
   const timerRef = useRef<TimerStore>(createTimerStore());
   const timer = timerRef.current;
 
-  const state = useSyncExternalStore(timer.subscribe.bind(timer), () =>
-    timer.getSnapshot()
+  const state = useSyncExternalStore(
+    timer.subscribe.bind(timer),
+    () => timer.getSnapshot(),
+    () => timer.getSnapshot()
   );
 
   useEffect(() => {
