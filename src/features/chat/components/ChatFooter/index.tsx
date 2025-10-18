@@ -28,6 +28,8 @@ export const ChatFooter = ({
           minRows={1}
           maxRows={4}
           style={{ flex: 1 }}
+          variant="filled"
+          radius="md"
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
