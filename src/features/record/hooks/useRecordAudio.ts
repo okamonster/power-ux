@@ -35,7 +35,12 @@ export const useRecordAudio = (
   const { data: mediaRecorder } = useSWR(
     ["audioStream", deviceId],
     () => getMediaRecorderByDeviceId(deviceId),
-    { suspense: false, revalidateOnFocus: false, revalidateOnReconnect: false, revalidateIfStale: false }
+    {
+      suspense: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      revalidateIfStale: false,
+    }
   );
 
   const [latestRecord, setLatestRecord] = useState<Blob | null>(null);
