@@ -4,4 +4,5 @@
   flex-direction: column;
   position: relative;
   max-width: 100%;
+  padding-bottom: 64px; /* 固定フッター分の余白 */
 }

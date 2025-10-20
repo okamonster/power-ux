@@ -2,7 +2,11 @@
   padding: 8px 12px;
   border-top: 1px solid #eee;
   background: #fff;
-  position: sticky;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
   bottom: 0;
-  z-index: 10;
+  width: 100%;
+  max-width: 500px; /* layout.module.css の .main に合わせる */
+  z-index: 1000;
 }
