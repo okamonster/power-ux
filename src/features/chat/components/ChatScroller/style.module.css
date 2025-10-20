@@ -1,4 +1,6 @@
 .root {
-  background-color: #ffffff;
-  padding-bottom: 64px;
+  height: 100%;
+  flex: 1;
+  min-height: 0; /* 親が flex-column のとき必要 */
+  overflow-y: auto;
 }
