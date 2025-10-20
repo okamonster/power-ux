@@ -3,9 +3,13 @@
   background-color: #ffffff;
   border-bottom: 1px solid #e0e0e0;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 10;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 500px; /* layout.module.css の .main に合わせる */
+  z-index: 1000;
 
   .title {
     font-size: 16px;
