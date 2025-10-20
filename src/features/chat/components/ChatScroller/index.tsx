@@ -1,6 +1,7 @@
 "use client";
 
-import { Avatar, Group, Paper, ScrollArea, Stack, Text } from "@mantine/core";
+import { Avatar, Group, Paper, Stack, Text } from "@mantine/core";
+import styles from "./style.module.css";
 import { useEffect, useMemo, useRef } from "react";
 
 type ChatMessage = {
@@ -27,10 +28,10 @@ export const ChatScroller = ({ messages, className, style }: Props) => {
   }, [lastMessageId]);
 
   return (
-    <ScrollArea
-      style={{ height: "100%", ...style }}
-      viewportRef={viewportRef}
-      className={className}
+    <div
+      ref={viewportRef}
+      className={`${styles.root} ${className ?? ""}`}
+      style={style}
     >
       <Stack p="md" gap="md">
         {messages.map((m) => {
@@ -63,7 +64,7 @@ export const ChatScroller = ({ messages, className, style }: Props) => {
           );
         })}
       </Stack>
-    </ScrollArea>
+    </div>
   );
 };
 
